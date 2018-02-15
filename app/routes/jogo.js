@@ -1,5 +1,5 @@
-module.exports = function(application){
-	application.get('/jogo', function(req, res){
-		application.app.controllers.jogoCtl.jogo(application, req, res);
+module.exports = function(apk){
+	apk.get('/jogo', function(req, res){
+		apk.app.controllers.jogoCtl.jogo(apk, req, res);
 	});
 };

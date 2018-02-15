@@ -1,9 +1,9 @@
-module.exports = function(application){
-	application.get('/cadastro', function(req, res){
-		application.app.controllers.cadastroCtl.cadastro(application, req, res);
+module.exports = function(apk){
+	apk.get('/cadastro', function(req, res){
+		apk.app.controllers.cadastroCtl.cadastro(apk, req, res);
 	});
 
-	application.post('/cadastrar', function(req, res){
-		application.app.controllers.cadastroCtl.cadastrar(application, req, res);
+	apk.post('/cadastrar', function(req, res){
+		apk.app.controllers.cadastroCtl.cadastrar(apk, req, res);
 	});
 }

@@ -1,3 +1,3 @@
-module.exports.jogo = function (application, req, res) {
+module.exports.jogo = function (apk, req, res) {
 	res.render('jogo');
 };

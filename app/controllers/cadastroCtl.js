@@ -25,8 +25,10 @@ module.exports.cadastrar = function (apk, req, res) {
 
     let connection = apk.config.dbConnection;
     let UsuariosDAO = new apk.app.models.UsuariosDAO(connection);
+    let JogoDAO = new apk.app.models.JogoDAO(connection);
 
     UsuariosDAO.inserirUsuario(dadosForm);
+    JogoDAO.gerarParametros(dadosForm.usuario);
 
     res.send('Podemos cadastrar');
 

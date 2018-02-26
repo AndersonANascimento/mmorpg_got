@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.cadastro = function (apk, req, res) {
     res.render('cadastro', {
         validacao: {},
@@ -30,6 +32,8 @@ module.exports.cadastrar = function (apk, req, res) {
     UsuariosDAO.inserirUsuario(dadosForm);
     JogoDAO.gerarParametros(dadosForm.usuario);
 
-    res.send('Podemos cadastrar');
+	res.render('index', {
+		validacao: {msg: "Cadastro efetuado com sucesso!"}
+	});
 
 };

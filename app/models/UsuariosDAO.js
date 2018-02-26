@@ -1,3 +1,5 @@
+'use strict';
+
 function UsuariosDAO(connection) {
     this._connection = connection();
     //console.log(this._connection);
@@ -18,7 +20,7 @@ UsuariosDAO.prototype.autenticar = function (usuario, req, res) {
         mongoclient.collection("usuarios", function (err, collection) {
             collection.find(usuario).toArray(function (err, result) {
 
-                if (result[0] != undefined) {
+                if (result[0] !== undefined) {
                     req.session.autorizado = true;
                     
                     req.session.usuario = result[0].usuario;

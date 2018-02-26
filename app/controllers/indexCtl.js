@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.index = function (apk, req, res) {
     res.render('index', {
         validacao: {}
@@ -25,5 +27,4 @@ module.exports.autenticar = function (apk, req, res) {
 
     UsuariosDAO.autenticar(dadosForm, req, res);
 
-    //res.send(dadosForm);
 };

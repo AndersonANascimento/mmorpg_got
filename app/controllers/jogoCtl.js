@@ -1,17 +1,14 @@
+'use strict';
+
 module.exports.jogo = function (apk, req, res) {
 	if (req.session.autorizado !== true) {
 		res.redirect('/');
 	}
 
-	let comando_invalido = (req.query.comando_invalido == 'S') ? 'S' : 'N';
-	console.log(comando_invalido);
-
 	let connection = apk.config.dbConnection;
 	let JogoDAO = new apk.app.models.JogoDAO(connection);
 
-	let usuario = req.session.usuario;
-	let casa = req.session.casa;
-	JogoDAO.iniciaJogo(res, usuario, casa, comando_invalido);
+	JogoDAO.iniciaJogo(req, res);
 	
 };
 
@@ -29,7 +26,7 @@ module.exports.suditos = function (apk, req, res) {
 	}
 
 	res.render('aldeoes', {validacao: {}});
-}
+};
 
 module.exports.pergaminhos = function (apk, req, res) {
 	if (req.session.autorizado !== true) {
@@ -37,7 +34,7 @@ module.exports.pergaminhos = function (apk, req, res) {
 	}
 	
 	res.render('pergaminhos', {validacao: {}});
-}
+};
 
 module.exports.ordenar_acao_sudito = function (apk, req, res) {
 	if (req.session.autorizado !== true) {
@@ -57,4 +54,4 @@ module.exports.ordenar_acao_sudito = function (apk, req, res) {
 	}
 	console.log(dadosForm);
 	res.send('tudo ok!');
-}
+};

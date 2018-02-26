@@ -1,3 +1,5 @@
+'use strict';
+
 function UsuariosDAO(connection) {
     this._connection = connection();
     //console.log(this._connection);

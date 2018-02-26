@@ -1,3 +1,5 @@
+'use strict';
+
 function JogoDAO(connection) {
     this._connection = connection();
 }
@@ -34,4 +36,4 @@ JogoDAO.prototype.iniciaJogo = function (res, usuario, casa, comando_invalido) {
 
 module.exports = function () {
     return JogoDAO;
-}
+};

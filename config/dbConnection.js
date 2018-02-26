@@ -1,3 +1,5 @@
+'use strict';
+
 /* importar o mongodb */
 let mongodb = require('mongodb');
 

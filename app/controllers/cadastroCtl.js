@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.cadastro = function (apk, req, res) {
     res.render('cadastro', {
         validacao: {},

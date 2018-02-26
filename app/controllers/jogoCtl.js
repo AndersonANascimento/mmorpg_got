@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.jogo = function (apk, req, res) {
 	if (req.session.autorizado !== true) {
 		res.redirect('/');

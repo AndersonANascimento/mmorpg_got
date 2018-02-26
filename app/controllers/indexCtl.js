@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.index = function (apk, req, res) {
     res.render('index', {
         validacao: {}

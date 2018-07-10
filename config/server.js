@@ -1,22 +1,22 @@
 'use strict';
 
 /* importar o módulo do framework express */
-let express = require('express');
+const express = require('express');
 
 /* importar o módulo do consign */
-let consign = require('consign');
+const consign = require('consign');
 
 /* importar o módulo do body-parser */
-let bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 /* importar o módulo do express-validator */
-let expressValidator = require('express-validator');
+const expressValidator = require('express-validator');
 
 /* importar o módulo do express-session */
-let expressSession = require('express-session');
+const expressSession = require('express-session');
 
 /* iniciar o objeto do express */
-let app = express();
+const app = express();
 
 /* setar as variáveis 'view engine' e 'views' do express */
 app.set('view engine', 'ejs');
@@ -39,12 +39,19 @@ app.use(expressSession({
 }));
 
 /* efetua o autoload das rotas, dos models e dos controllers para o objeto app */
-consign()
-	.include('app/routes')
-	.then('config/dbConnection.js')
-	.then('app/models')
-	.then('app/controllers')
-	.into(app);
+consign({
+    cwd: 'app',
+    locale: 'pt-br',
+    logger: console,
+    verbose: true,
+    extensions: ['.js', '.json', '.node'],
+    loggingType: 'info'
+})
+.include('routes')
+.then('models')
+.then('controllers')
+.then('infra')
+.into(app);
 
 /* exportar o objeto app */
 module.exports = app;

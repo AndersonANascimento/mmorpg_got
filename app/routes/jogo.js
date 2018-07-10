@@ -1,23 +1,30 @@
 'use strict';
 
-module.exports = function(apk){
-	apk.get('/jogo', function(req, res){
-		apk.app.controllers.jogoCtl.jogo(apk, req, res);
+const jogo = (apk) => {
+	apk.get('/jogo', (req, res) => {
+		let jogoCtl = new apk.controllers.JogoCtl(apk);
+		jogoCtl.jogo(req, res);
 	});
-
-	apk.get('/suditos', function(req, res){
-		apk.app.controllers.jogoCtl.suditos(apk, req, res);
+	
+	apk.get('/suditos', (req, res) => {
+		let jogoCtl = new apk.controllers.JogoCtl(apk);
+		jogoCtl.suditos(req, res);
 	});
-
-	apk.get('/pergaminhos', function(req, res){
-		apk.app.controllers.jogoCtl.pergaminhos(apk, req, res);
+	
+	apk.get('/pergaminhos', (req, res) => {
+		let jogoCtl = new apk.controllers.JogoCtl(apk);
+		jogoCtl.pergaminhos(req, res);
 	});
-
-	apk.post('/ordenar_acao_sudito', function(req, res){
-		apk.app.controllers.jogoCtl.ordenar_acao_sudito(apk, req, res);
+	
+	apk.post('/ordenar_acao_sudito', (req, res) => {
+		let jogoCtl = new apk.controllers.JogoCtl(apk);
+		jogoCtl.ordenar_acao_sudito(req, res);
 	});
-
-	apk.get('/sair', function(req, res){
-		apk.app.controllers.jogoCtl.sair(apk, req, res);
+	
+	apk.get('/sair', (req, res) => {
+		let jogoCtl = new apk.controllers.JogoCtl(apk);
+		jogoCtl.sair(req, res);
 	});
 };
+
+module.exports = jogo;

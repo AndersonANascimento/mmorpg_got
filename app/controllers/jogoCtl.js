@@ -1,57 +1,62 @@
 'use strict';
 
-module.exports.jogo = function (apk, req, res) {
-	if (req.session.autorizado !== true) {
-		res.redirect('/');
+class JogoCtl {
+    constructor (app) {
+        this._app = app;
+	}
+	
+	jogo (req, res) {
+		if (req.session.autorizado !== true) {
+			res.redirect('/');
+		}
+
+		let connection = this._app.infra.dbConnection;
+		let jogoDAO = new this._app.models.JogoDAO(connection);
+
+		jogoDAO.iniciaJogo(req, res);
 	}
 
-	let connection = apk.config.dbConnection;
-	let JogoDAO = new apk.app.models.JogoDAO(connection);
-
-	JogoDAO.iniciaJogo(req, res);
-	
-};
-
-module.exports.sair = function (apk, req, res) {
-	req.session.destroy(function (err) {
-		res.render('index', {
-			validacao: {}
+	sair (req, res) {
+		req.session.destroy(function (err) {
+			res.render('index', {validacao: {}});
 		});
-	});
-};
-
-module.exports.suditos = function (apk, req, res) {
-	if (req.session.autorizado !== true) {
-		res.redirect('/');
 	}
 
-	res.render('aldeoes', {validacao: {}});
-};
+	suditos (req, res) {
+		if (req.session.autorizado !== true) {
+			res.redirect('/');
+		}
 
-module.exports.pergaminhos = function (apk, req, res) {
-	if (req.session.autorizado !== true) {
-		res.redirect('/');
+		res.render('aldeoes', {validacao: {}});
 	}
-	
-	res.render('pergaminhos', {validacao: {}});
-};
 
-module.exports.ordenar_acao_sudito = function (apk, req, res) {
-	if (req.session.autorizado !== true) {
-		res.redirect('/');
+	pergaminhos (req, res) {
+		if (req.session.autorizado !== true) {
+			res.redirect('/');
+		}
+		
+		res.render('pergaminhos', {validacao: {}});
 	}
-	
-	let dadosForm = req.body;
 
-	req.assert('acao', 'Ação deve ser informada').notEmpty();
-	req.assert('quantidade', 'A quantidade deve ser informada').notEmpty();
+	ordenar_acao_sudito (req, res) {
+		if (req.session.autorizado !== true) {
+			res.redirect('/');
+		}
+		
+		let dadosForm = req.body;
 
-	let erros = req.validationErrors();
+		req.assert('acao', 'Ação deve ser informada').notEmpty();
+		req.assert('quantidade', 'A quantidade deve ser informada').notEmpty();
 
-	if(erros) {
-		res.redirect('jogo?comando_invalido=S');
-		return;
+		let erros = req.validationErrors();
+
+		if(erros) {
+			res.redirect('jogo?comando_invalido=S');
+			return;
+		}
+		console.log(dadosForm);
+		res.send('tudo ok!');
 	}
-	console.log(dadosForm);
-	res.send('tudo ok!');
-};
+}
+
+module.exports = () => JogoCtl;

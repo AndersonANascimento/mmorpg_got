@@ -1,39 +1,38 @@
 'use strict';
 
-module.exports.cadastro = function (apk, req, res) {
-    res.render('cadastro', {
-        validacao: {},
-        dadosForm: {}
-    });
-};
-
-module.exports.cadastrar = function (apk, req, res) {
-    let dadosForm = req.body;
-
-    req.assert('nome', 'Nome não pode ser vazio').notEmpty();
-    req.assert('usuario', 'Usuário não pode ser vazio').notEmpty();
-    req.assert('senha', 'Password não pode ser vazio').notEmpty();
-    req.assert('casa', 'Casa não pode ser vazio').notEmpty();
-
-    let erros = req.validationErrors();
-
-    if (erros) {
-        res.render('cadastro', {
-            validacao: erros,
-            dadosForm: dadosForm
-        });
-        return;
+class CadastroCtl {
+    constructor (app) {
+        this._app = app;
     }
 
-    let connection = apk.config.dbConnection;
-    let UsuariosDAO = new apk.app.models.UsuariosDAO(connection);
-    let JogoDAO = new apk.app.models.JogoDAO(connection);
+    cadastro (req, res) {
+        res.render('cadastro', {validacao: {}, dadosForm: {}});
+    }
 
-    UsuariosDAO.inserirUsuario(dadosForm);
-    JogoDAO.gerarParametros(dadosForm.usuario);
+    cadastrar (req, res) {
+        let dadosForm = req.body;
 
-	res.render('index', {
-		validacao: {msg: "Cadastro efetuado com sucesso!"}
-	});
+        req.assert('nome', 'Nome não pode ser vazio').notEmpty();
+        req.assert('usuario', 'Usuário não pode ser vazio').notEmpty();
+        req.assert('senha', 'Password não pode ser vazio').notEmpty();
+        req.assert('casa', 'Casa não pode ser vazio').notEmpty();
 
-};
+        let erros = req.validationErrors();
+
+        if (erros) {
+            res.render('cadastro', {validacao: erros, dadosForm: dadosForm});
+            return;
+        }
+
+        let connection = this._app.infra.dbConnection;
+        let usuariosDAO = new this._app.models.UsuariosDAO(connection);
+        let jogoDAO = new this._app.models.JogoDAO(connection);
+
+        usuariosDAO.inserirUsuario(dadosForm);
+        jogoDAO.gerarParametros(dadosForm.usuario);
+
+        res.render('index', {validacao: {msg: "Cadastro efetuado com sucesso!"}});
+    }
+}
+
+module.exports = () => CadastroCtl;

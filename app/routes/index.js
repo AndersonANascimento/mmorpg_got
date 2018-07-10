@@ -1,11 +1,15 @@
 'use strict';
 
-module.exports = function(apk){
-	apk.get('/', function(req, res){
-		apk.app.controllers.indexCtl.index(apk, req, res);
+const home = (app) => {
+	app.get('/', (req, res) => {
+		let homeCtl = new app.controllers.HomeCtl(app);
+		homeCtl.index(req, res);
 	});
 	
-	apk.post('/autenticar', function(req, res) {
-		apk.app.controllers.indexCtl.autenticar(apk, req, res);
+	app.post('/autenticar', (req, res) => {
+		let homeCtl = new app.controllers.HomeCtl(app);
+		homeCtl.autenticar(req, res);
 	});
 };
+
+module.exports = home;

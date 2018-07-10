@@ -1,11 +1,15 @@
 'use strict';
 
-module.exports = function(apk){
-	apk.get('/cadastro', function(req, res){
-		apk.app.controllers.cadastroCtl.cadastro(apk, req, res);
+const cadastro = (apk) => {
+	apk.get('/cadastro', (req, res) => {
+		let cadastroCtl = new apk.controllers.CadastroCtl(apk);
+		cadastroCtl.cadastro(req, res);
 	});
-
-	apk.post('/cadastrar', function(req, res){
-		apk.app.controllers.cadastroCtl.cadastrar(apk, req, res);
+	
+	apk.post('/cadastrar', (req, res) => {
+		let cadastroCtl = new apk.controllers.CadastroCtl(apk);
+		cadastroCtl.cadastrar(req, res);
 	});
 };
+	
+module.exports = cadastro;

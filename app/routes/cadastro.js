@@ -1,14 +1,12 @@
 'use strict';
 
-const cadastro = (apk) => {
-	apk.get('/cadastro', (req, res) => {
-		let cadastroCtl = new apk.controllers.CadastroCtl(apk);
-		cadastroCtl.cadastro(req, res);
+const cadastro = (app) => {
+	app.get('/cadastro', (req, res) => {
+		app.controllers.CadastroCtl.cadastro(req, res);
 	});
 	
-	apk.post('/cadastrar', (req, res) => {
-		let cadastroCtl = new apk.controllers.CadastroCtl(apk);
-		cadastroCtl.cadastrar(req, res);
+	app.post('/cadastrar', (req, res) => {
+		new app.controllers.CadastroCtl(app).cadastrar(req, res);
 	});
 };
 	

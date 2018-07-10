@@ -1,29 +1,24 @@
 'use strict';
 
-const jogo = (apk) => {
-	apk.get('/jogo', (req, res) => {
-		let jogoCtl = new apk.controllers.JogoCtl(apk);
-		jogoCtl.jogo(req, res);
+const jogo = (app) => {
+	app.get('/jogo', (req, res) => {
+		new app.controllers.JogoCtl(app).jogo(req, res);
 	});
 	
-	apk.get('/suditos', (req, res) => {
-		let jogoCtl = new apk.controllers.JogoCtl(apk);
-		jogoCtl.suditos(req, res);
+	app.get('/suditos', (req, res) => {
+		app.controllers.JogoCtl.suditos(req, res);
 	});
 	
-	apk.get('/pergaminhos', (req, res) => {
-		let jogoCtl = new apk.controllers.JogoCtl(apk);
-		jogoCtl.pergaminhos(req, res);
+	app.get('/pergaminhos', (req, res) => {
+		app.controllers.JogoCtl.pergaminhos(req, res);
 	});
 	
-	apk.post('/ordenar_acao_sudito', (req, res) => {
-		let jogoCtl = new apk.controllers.JogoCtl(apk);
-		jogoCtl.ordenar_acao_sudito(req, res);
+	app.post('/ordenar_acao_sudito', (req, res) => {
+		app.controllers.JogoCtl.ordenar_acao_sudito(req, res);
 	});
 	
-	apk.get('/sair', (req, res) => {
-		let jogoCtl = new apk.controllers.JogoCtl(apk);
-		jogoCtl.sair(req, res);
+	app.get('/sair', (req, res) => {
+		app.controllers.JogoCtl.sair(req, res);
 	});
 };
 

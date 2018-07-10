@@ -5,7 +5,7 @@ class HomeCtl {
         this._app = app;
     }
 
-    index (req, res) {
+    static index (req, res) {
         res.render('index', {validacao: {}});
     };
 
@@ -24,9 +24,9 @@ class HomeCtl {
         }
 
         let connection = this._app.infra.dbConnection;
-        let UsuariosDAO = new this._app.models.UsuariosDAO(connection);
+        let usuariosDAO = new this._app.models.UsuariosDAO(connection);
 
-        UsuariosDAO.autenticar(dadosForm, req, res);
+        usuariosDAO.autenticar(dadosForm, req, res);
 
     };
 }

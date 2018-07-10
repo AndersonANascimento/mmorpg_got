@@ -6,8 +6,8 @@ class JogoDAO {
 	}
 
 	gerarParametros (usuario) {
-		this._connection.open(function (err, mongoclient) {
-			mongoclient.collection("jogo", function (err, collection) {
+		this._connection.open((err, mongoclient) => {
+			mongoclient.collection("jogo", (err, collection) => {
 				collection.insert({
 					usuario: usuario,
 					moeda: 15,
@@ -24,9 +24,9 @@ class JogoDAO {
 	}
 	
 	iniciaJogo (req, res) {
-		this._connection.open(function (err, mongoclient) {
-			mongoclient.collection("jogo", function (err, collection) {
-				collection.find({usuario: req.session.usuario}).toArray(function (err, result) {
+		this._connection.open((err, mongoclient) => {
+			mongoclient.collection("jogo", (err, collection) => {
+				collection.find({usuario: req.session.usuario}).toArray((err, result) => {
 					res.render('jogo', {
 						img_casa: req.session.casa,
 						jogo: result[0],

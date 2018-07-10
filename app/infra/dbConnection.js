@@ -4,15 +4,13 @@
 const mongodb = require('mongodb');
 
 const connMongoDB = function () {
-    const db = new mongodb.Db(
+	return new mongodb.Db(
         'got',
         new mongodb.Server(
-            '192.168.0.7',
+            '192.168.33.10',
             27017, {}
         ), {}
     );
-
-    return db;
 };
 
 module.exports = () => connMongoDB;

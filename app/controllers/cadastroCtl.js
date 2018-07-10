@@ -5,7 +5,7 @@ class CadastroCtl {
         this._app = app;
     }
 
-    cadastro (req, res) {
+    static cadastro (req, res) {
         res.render('cadastro', {validacao: {}, dadosForm: {}});
     }
 

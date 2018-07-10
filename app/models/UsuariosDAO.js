@@ -7,8 +7,8 @@ class UsuariosDAO {
     }
 
     inserirUsuario (usuario) {
-        this._connection.open(function (err, mongoclient) {
-            mongoclient.collection("usuarios", function (err, collection) {
+        this._connection.open((err, mongoclient) => {
+            mongoclient.collection("usuarios", (err, collection) => {
                 collection.insert(usuario);
 
                 mongoclient.close();
@@ -17,11 +17,12 @@ class UsuariosDAO {
     };
 
     autenticar (usuario, req, res) {
-        this._connection.open(function (err, mongoclient) {
-            mongoclient.collection("usuarios", function (err, collection) {
-                collection.find(usuario).toArray(function (err, result) {
-
+        this._connection.open((err, mongoclient) => {
+            mongoclient.collection("usuarios", (err, collection) => {
+                // collection.find({usuario: {$eq: usuario.usuario}, senha: {$eq: usuario.senha}}).toArray((err, result) => {
+                collection.find(usuario).toArray((err, result) => {
                     if (result[0] !== undefined) {
+                        console.log(result);
                         req.session.autorizado = true;
                         
                         req.session.usuario = result[0].usuario;
@@ -31,9 +32,7 @@ class UsuariosDAO {
                     if (req.session.autorizado) {
                         res.redirect('jogo');
                     } else {
-                        res.render('index', {
-                            validacao: {}
-                        });
+                        res.render('index', {validacao: [{msg: "Usuário/Senha inválida ou não cadastrada!"}]});
                     }
                 });
 

@@ -16,13 +16,13 @@ class JogoCtl {
 		jogoDAO.iniciaJogo(req, res);
 	}
 
-	sair (req, res) {
+	static sair (req, res) {
 		req.session.destroy(function (err) {
 			res.render('index', {validacao: {}});
 		});
 	}
 
-	suditos (req, res) {
+	static suditos (req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
 		}
@@ -30,7 +30,7 @@ class JogoCtl {
 		res.render('aldeoes', {validacao: {}});
 	}
 
-	pergaminhos (req, res) {
+	static pergaminhos (req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
 		}
@@ -38,7 +38,7 @@ class JogoCtl {
 		res.render('pergaminhos', {validacao: {}});
 	}
 
-	ordenar_acao_sudito (req, res) {
+	static ordenar_acao_sudito (req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
 		}

@@ -14,7 +14,7 @@ const jogo = (app) => {
 	});
 	
 	app.post('/ordenar_acao_sudito', (req, res) => {
-		app.controllers.JogoCtl.ordenar_acao_sudito(req, res);
+		new app.controllers.JogoCtl(app).ordenar_acao_sudito(req, res);
 	});
 	
 	app.get('/sair', (req, res) => {

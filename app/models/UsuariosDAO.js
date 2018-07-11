@@ -22,7 +22,6 @@ class UsuariosDAO {
                 // collection.find({usuario: {$eq: usuario.usuario}, senha: {$eq: usuario.senha}}).toArray((err, result) => {
                 collection.find(usuario).toArray((err, result) => {
                     if (result[0] !== undefined) {
-                        console.log(result);
                         req.session.autorizado = true;
                         
                         req.session.usuario = result[0].usuario;

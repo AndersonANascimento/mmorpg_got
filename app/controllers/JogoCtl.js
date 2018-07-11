@@ -8,12 +8,13 @@ class JogoCtl {
 	jogo (req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
+			return;
 		}
 
 		let connection = this._app.infra.dbConnection;
 		let jogoDAO = new this._app.models.JogoDAO(connection);
-
 		jogoDAO.iniciaJogo(req, res);
+
 	}
 
 	static sair (req, res) {
@@ -25,6 +26,7 @@ class JogoCtl {
 	static suditos (req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
+			return;
 		}
 
 		res.render('aldeoes', {validacao: {}});
@@ -33,16 +35,18 @@ class JogoCtl {
 	static pergaminhos (req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
+			return;
 		}
-		
+
 		res.render('pergaminhos', {validacao: {}});
 	}
 
-	static ordenar_acao_sudito (req, res) {
+	ordenar_acao_sudito (req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
+			return;
 		}
-		
+
 		let dadosForm = req.body;
 
 		req.assert('acao', 'Ação deve ser informada').notEmpty();
@@ -54,8 +58,14 @@ class JogoCtl {
 			res.redirect('jogo?comando_invalido=S');
 			return;
 		}
-		console.log(dadosForm);
-		res.send('tudo ok!');
+
+		let connection = this._app.infra.dbConnection;
+		let jogoDAO = new this._app.models.JogoDAO(connection);
+
+		dadosForm.usuario = req.session.usuario;
+		jogoDAO.acao(dadosForm);
+
+		res.redirect('jogo?comando_invalido=N');
 	}
 }
 

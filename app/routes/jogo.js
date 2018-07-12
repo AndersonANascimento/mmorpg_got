@@ -10,7 +10,7 @@ const jogo = (app) => {
 	});
 	
 	app.get('/pergaminhos', (req, res) => {
-		app.controllers.JogoCtl.pergaminhos(req, res);
+		new app.controllers.JogoCtl(app).pergaminhos(req, res);
 	});
 	
 	app.post('/ordenar_acao_sudito', (req, res) => {

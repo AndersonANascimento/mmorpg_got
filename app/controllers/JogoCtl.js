@@ -1,11 +1,11 @@
 'use strict';
 
 class JogoCtl {
-    constructor (app) {
-        this._app = app;
+	constructor(app) {
+		this._app = app;
 	}
-	
-	jogo (req, res) {
+
+	jogo(req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
 			return;
@@ -14,16 +14,15 @@ class JogoCtl {
 		let connection = this._app.infra.dbConnection;
 		let jogoDAO = new this._app.models.JogoDAO(connection);
 		jogoDAO.iniciaJogo(req, res);
-
 	}
 
-	static sair (req, res) {
+	static sair(req, res) {
 		req.session.destroy(function (err) {
 			res.render('index', {validacao: {}});
 		});
 	}
 
-	static suditos (req, res) {
+	static suditos(req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
 			return;
@@ -32,16 +31,19 @@ class JogoCtl {
 		res.render('aldeoes', {validacao: {}});
 	}
 
-	static pergaminhos (req, res) {
+	pergaminhos(req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
 			return;
 		}
 
-		res.render('pergaminhos', {validacao: {}});
+		let connection = this._app.infra.dbConnection;
+		let jogoDAO = new this._app.models.JogoDAO(connection);
+
+		jogoDAO.getAcoes(req, res);
 	}
 
-	ordenar_acao_sudito (req, res) {
+	ordenar_acao_sudito(req, res) {
 		if (req.session.autorizado !== true) {
 			res.redirect('/');
 			return;
@@ -54,8 +56,8 @@ class JogoCtl {
 
 		let erros = req.validationErrors();
 
-		if(erros) {
-			res.redirect('jogo?comando_invalido=S');
+		if (erros) {
+			res.redirect('jogo?msg=A');
 			return;
 		}
 
@@ -65,7 +67,7 @@ class JogoCtl {
 		dadosForm.usuario = req.session.usuario;
 		jogoDAO.acao(dadosForm);
 
-		res.redirect('jogo?comando_invalido=N');
+		res.redirect('jogo?msg=B');
 	}
 }
 

@@ -30,7 +30,7 @@ class JogoDAO {
 					res.render('jogo', {
 						img_casa: req.session.casa,
 						jogo: result[0],
-						comando_invalido: (req.query.comando_invalido === 'S') ? 'S' : 'N'
+						msg: req.query.msg
 					});
 				});
 
@@ -44,7 +44,7 @@ class JogoDAO {
 			mongoclient.collection("acao", (err, collection) => {
 				let date = new Date();
 				let tempo = null;
-				switch (acao.acao) {
+				switch (parseInt(acao.acao)) {
 					case 1:
 						tempo = 1 * 60 * 60000;
 						break;
@@ -64,6 +64,22 @@ class JogoDAO {
 				mongoclient.close();
 			});
 		});
+	}
+
+	getAcoes(req, res) {
+		this._connection.open((err, mongoclient) => {
+			mongoclient.collection("acao", (err, collection) => {
+				let date = new Date();
+				let momento_atual = date.getTime();
+
+				collection.find({usuario: req.session.usuario, acao_termina_em: {$gt: momento_atual}}).toArray((err, result) => {
+					res.render('pergaminhos', {acoes: result});
+				});
+
+				mongoclient.close();
+			});
+		});
+
 	}
 }
 

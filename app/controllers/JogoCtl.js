@@ -13,11 +13,12 @@ class JogoCtl {
 
 		let connection = this._app.infra.dbConnection;
 		let jogoDAO = new this._app.models.JogoDAO(connection);
+
 		jogoDAO.iniciaJogo(req, res);
 	}
 
 	static sair(req, res) {
-		req.session.destroy(function (err) {
+		req.session.destroy((err) => {
 			res.render('index', {validacao: {}});
 		});
 	}
@@ -52,7 +53,7 @@ class JogoCtl {
 		let dadosForm = req.body;
 
 		req.assert('acao', 'Ação deve ser informada').notEmpty();
-		req.assert('quantidade', 'A quantidade deve ser informada').notEmpty();
+		req.assert('qtd_suditos', 'A quantidade deve ser informada').notEmpty();
 
 		let erros = req.validationErrors();
 
@@ -68,6 +69,20 @@ class JogoCtl {
 		jogoDAO.acao(dadosForm);
 
 		res.redirect('jogo?msg=B');
+	}
+
+	revogar_acao(req, res) {
+		if (req.session.autorizado !== true) {
+			res.redirect('/');
+			return;
+		}
+
+		let _id = req.query.id_acao;
+
+		let connection = this._app.infra.dbConnection;
+		let jogoDAO = new this._app.models.JogoDAO(connection);
+
+		jogoDAO.revogarAcao(_id, res);
 	}
 }
 

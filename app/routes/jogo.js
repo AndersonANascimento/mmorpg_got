@@ -16,7 +16,11 @@ const jogo = (app) => {
 	app.post('/ordenar_acao_sudito', (req, res) => {
 		new app.controllers.JogoCtl(app).ordenar_acao_sudito(req, res);
 	});
-	
+
+	app.get('/revogar_acao', (req, res) => {
+		new app.controllers.JogoCtl(app).revogar_acao(req, res);
+	});
+
 	app.get('/sair', (req, res) => {
 		app.controllers.JogoCtl.sair(req, res);
 	});

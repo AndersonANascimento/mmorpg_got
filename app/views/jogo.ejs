@@ -45,6 +45,11 @@
         <strong>Senhor, a ação ordenada foi finalizada!</strong>
     </div>
     <% } %>
+    <% if(msg == 'D') { %>
+    <div class="alert alert-info" id="msg">
+        <strong>Senhor, a ação ordenada foi revogada!</strong>
+    </div>
+    <% } %>
 
     <div class="row">
         <div class="col-sm-3 casa">
@@ -55,30 +60,22 @@
             <div class="row barra-superior">
                 <div class="col-sm-2">
                     <img src="images/habilidades/temor.jpg" title="Temor" alt="Temor"/>
-                    <span>
-							<%= jogo.temor %>
-						</span>
+                    <span><%= jogo.temor %></span>
                 </div>
 
                 <div class="col-sm-2">
                     <img src="images/habilidades/sabedoria.jpg" title="Sabedoria" alt="Sabedoria"/>
-                    <span>
-							<%= jogo.sabedoria %>
-						</span>
+                    <span><%= jogo.sabedoria %></span>
                 </div>
 
                 <div class="col-sm-2">
                     <img src="images/habilidades/comercio.jpg" title="Comércio" alt="Comércio"/>
-                    <span>
-							<%= jogo.comercio %>
-						</span>
+                    <span><%= jogo.comercio %></span>
                 </div>
 
                 <div class="col-sm-2">
                     <img src="images/habilidades/magia.jpg" title="Magia" alt="Magia"/>
-                    <span>
-							<%= jogo.magia %>
-						</span>
+                    <span><%= jogo.magia %></span>
                 </div>
             </div>
         </div>
@@ -99,9 +96,7 @@
         <div class="row">
             <div class="col-sm-1">
                 <img src="images/outros/suditos.jpg" title="Aldeões" alt="Aldeões" id="btn_suditos"/>
-                <span>
-						<%= jogo.suditos %>
-					</span>
+                <span><%= jogo.suditos %></span>
             </div>
 
             <div class="col-sm-1">
@@ -112,39 +107,37 @@
 
             <div class="col-sm-2">
                 <img src="images/outros/moeda.jpg" title="Moeda" alt="Moeda"/>
-                <span>
-						<%= jogo.moeda %>
-					</span>
+                <span><%= jogo.moeda %></span>
             </div>
 
         </div>
     </div>
 </div>
 <script>
-	$(document).ready(function () {
-		$('#btn_sair').click(function () {
+	$(document).ready(() => {
+		$('#btn_sair').click(() => {
 			window.location.href = '/sair';
 		});
 
-		$('#btn_suditos').click(function () {
+		$('#btn_suditos').click(() => {
 			$('#msg').hide();
 			$.ajax({
 				url: '/suditos',
 				method: 'GET',
-				success: function (data) {
+				success: (data) => {
 					$('#acoes').html(data);
 				}
 			});
 		});
 
-		$('#btn_pergaminho').click(function () {
+		$('#btn_pergaminho').click(() => {
 			$('#msg').hide();
 			$.ajax({
 				url: '/pergaminhos',
 				method: 'GET',
-				success: function (data) {
+				success: (data) => {
 					$('#acoes').html(data);
-					console.log('clearTimeout');
+					// console.log('clearTimeout');
 					clearTimeout(timerId);
 					cronometro();
 				}

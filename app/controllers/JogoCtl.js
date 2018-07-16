@@ -11,6 +11,15 @@ class JogoCtl {
 			return;
 		}
 
+		if (req.query.msg) {
+			res.render('jogo', {
+				img_casa: req.session.casa,
+				jogo: req.session.jogo,
+				msg: req.query.msg
+			});
+			return;
+		}
+
 		let connection = this._app.infra.dbConnection;
 		let jogoDAO = new this._app.models.JogoDAO(connection);
 

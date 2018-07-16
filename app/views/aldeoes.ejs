@@ -1,5 +1,16 @@
 <div id="aldecoes">					
 	<h3>Aldeões</h3>
+
+	<% if(validacao.length > 0){ %>
+	<div class="alert alert-danger">
+		<strong>Atenção!</strong>
+		<ul>
+			<% validacao.forEach((e) => { %>
+			<li><%= e.msg %></li>
+			<% }) %>
+		</ul>
+	</div>
+	<% } %>
 	
 	<form class="form-cadastro" action="/ordenar_acao_sudito" method="POST">
 

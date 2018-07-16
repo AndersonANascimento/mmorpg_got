@@ -28,9 +28,10 @@ class JogoDAO {
 		this._connection.open((err, mongoclient) => {
 			mongoclient.collection("jogo", (err, collection) => {
 				collection.find({usuario: req.session.usuario}).toArray((err, result) => {
+					req.session.jogo = result[0];
 					res.render('jogo', {
 						img_casa: req.session.casa,
-						jogo: result[0],
+						jogo: req.session.jogo,
 						msg: req.query.msg
 					});
 				});

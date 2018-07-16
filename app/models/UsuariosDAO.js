@@ -16,7 +16,7 @@ class UsuariosDAO {
         });
     };
 
-    autenticar (usuario, req, res) {
+    login (usuario, req, res) {
         this._connection.open((err, mongoclient) => {
             mongoclient.collection("usuarios", (err, collection) => {
                 // collection.find({usuario: {$eq: usuario.usuario}, senha: {$eq: usuario.senha}}).toArray((err, result) => {

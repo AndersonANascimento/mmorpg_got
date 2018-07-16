@@ -26,7 +26,7 @@ class HomeCtl {
         let connection = this._app.infra.dbConnection;
         let usuariosDAO = new this._app.models.UsuariosDAO(connection);
 
-        usuariosDAO.autenticar(dadosForm, req, res);
+        usuariosDAO.login(dadosForm, req, res);
 
     };
 }

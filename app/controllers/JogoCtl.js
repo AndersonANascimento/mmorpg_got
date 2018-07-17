@@ -11,11 +11,14 @@ class JogoCtl {
 			return;
 		}
 
-		if (req.query.msg) {
+		if (!!req.session.validacao) {
+			let validacao = req.session.validacao;
+			// delete req.session.validacao;
 			res.render('jogo', {
 				img_casa: req.session.casa,
 				jogo: req.session.jogo,
-				msg: req.query.msg
+				msg: req.query.msg,
+				validacao: validacao
 			});
 			return;
 		}
@@ -37,8 +40,13 @@ class JogoCtl {
 			res.redirect('/');
 			return;
 		}
+		let validacao = {};
+		if (!!req.session.validacao) {
+			validacao = req.session.validacao;
+			delete req.session.validacao;
+		}
 
-		res.render('aldeoes', {validacao: {}});
+		res.render('aldeoes', {validacao: validacao});
 	}
 
 	pergaminhos(req, res) {
@@ -67,7 +75,8 @@ class JogoCtl {
 		let erros = req.validationErrors();
 
 		if (erros) {
-			res.redirect('jogo?msg=A');
+			req.session.validacao = erros;
+			res.redirect('jogo');
 			return;
 		}
 

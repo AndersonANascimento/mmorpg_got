@@ -7,25 +7,25 @@ class UsuariosDAO {
     }
 
     inserirUsuario (usuario) {
-        this._connection.open((err, mongoclient) => {
-            mongoclient.collection("usuarios", (err, collection) => {
-                collection.insert(usuario);
+        this._connection.open((err, db) => {
+            db.collection("usuarios", (err, usuarios) => {
+                usuarios.insert(usuario);
 
-                mongoclient.close();
+                db.close();
             });
         });
     };
 
     login (usuario, req, res) {
-        this._connection.open((err, mongoclient) => {
-            mongoclient.collection("usuarios", (err, collection) => {
+        this._connection.open((err, db) => {
+            db.collection("usuarios", (err, usuarios) => {
                 // collection.find({usuario: {$eq: usuario.usuario}, senha: {$eq: usuario.senha}}).toArray((err, result) => {
-                collection.find(usuario).toArray((err, result) => {
-                    if (result[0] !== undefined) {
+				usuarios.find(usuario).toArray((err, user) => {
+                    if (user[0] !== undefined) {
                         req.session.autorizado = true;
                         
-                        req.session.usuario = result[0].usuario;
-                        req.session.casa = result[0].casa;
+                        req.session.usuario = user[0].usuario;
+                        req.session.casa = user[0].casa;
                     }
 
                     if (req.session.autorizado) {
@@ -35,7 +35,7 @@ class UsuariosDAO {
                     }
                 });
 
-                mongoclient.close();
+                db.close();
             });
         });
     };

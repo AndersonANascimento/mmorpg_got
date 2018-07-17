@@ -30,11 +30,6 @@
 </nav>
 
 <div class="container">
-    <% if(msg == 'A') { %>
-    <div class="alert alert-danger" id="msg">
-        <strong>Operação inválida, verifique se todos os campos foram informados.</strong>
-    </div>
-    <% } %>
     <% if(msg == 'B') { %>
     <div class="alert alert-info" id="msg">
         <strong>Ação realizada com sucesso.</strong>
@@ -143,6 +138,11 @@
 				}
 			});
 		});
+
+		if (<%= validacao.length > 0 %>) {
+			console.log('Passando no triger');
+			$('#btn_suditos').trigger('click');
+		}
 	});
 
 	let timerId = null;
